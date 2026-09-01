@@ -1,4 +1,4 @@
-# 🚗 Garagem Digital
+# Garagem Digital
 
 ## Autor
 Bruna Martins Moura — Matrícula 22650015
