@@ -5,9 +5,7 @@ const areaResultado = document.getElementById("resultado");
 const cacheImagens = new Map();
 
 
-// ==================================================
-// MARCAS E MODELOS QUE A GARAGEM DIGITAL VAI EXIBIR
-// ==================================================
+
 
 const catalogo = {
 
@@ -253,9 +251,7 @@ const catalogo = {
 };
 
 
-// ==================================================
-// NOMES QUE A BRASILAPI USA
-// ==================================================
+
 
 const nomesMarcasAPI = {
 
@@ -327,9 +323,7 @@ const nomesMarcasAPI = {
 };
 
 
-// ==================================================
-// NORMALIZAR TEXTO
-// ==================================================
+
 
 function normalizar(texto) {
 
@@ -342,9 +336,7 @@ function normalizar(texto) {
 }
 
 
-// ==================================================
-// IDENTIFICAR NOME BONITO DA MARCA
-// ==================================================
+
 
 function encontrarMarca(nomeAPI) {
 
@@ -376,9 +368,7 @@ function encontrarMarca(nomeAPI) {
 }
 
 
-// ==================================================
-// CARREGAR SOMENTE MARCAS CONHECIDAS
-// ==================================================
+
 
 async function carregarMarcas() {
 
@@ -502,9 +492,7 @@ async function carregarMarcas() {
 }
 
 
-// ==================================================
-// IDENTIFICAR MODELO CONHECIDO
-// ==================================================
+
 
 function identificarModelo(
     nomeCompleto,
@@ -519,13 +507,7 @@ function identificarModelo(
         normalizar(nomeCompleto);
 
 
-    /*
-     * Ordenamos do maior para o menor
-     * para evitar:
-     *
-     * Corolla Cross virar Corolla
-     * Dolphin Mini virar Dolphin
-     */
+
     const ordenados =
         [...modelosPermitidos]
             .sort(
@@ -555,9 +537,7 @@ function identificarModelo(
 }
 
 
-// ==================================================
-// FILTRAR E AGRUPAR MODELOS
-// ==================================================
+
 
 function prepararModelos(
     modelosAPI,
@@ -576,10 +556,7 @@ function prepararModelos(
             );
 
 
-        /*
-         * Ignora carros que não fazem
-         * parte do nosso catálogo.
-         */
+
         if (!modelo) {
             return;
         }
@@ -618,9 +595,7 @@ function prepararModelos(
 }
 
 
-// ==================================================
-// BUSCAR MODELOS NA BRASILAPI
-// ==================================================
+
 
 async function buscarModelos() {
 
@@ -749,9 +724,7 @@ async function buscarModelos() {
 }
 
 
-// ==================================================
-// AJUSTAR NOME DA MARCA PARA IMAGEM
-// ==================================================
+
 
 function marcaParaImagem(marca) {
 
@@ -767,9 +740,7 @@ function marcaParaImagem(marca) {
 }
 
 
-// ==================================================
-// BUSCAR IMAGEM NO WIKIMEDIA COMMONS
-// ==================================================
+
 
 async function buscarImagem(
     marca,
@@ -969,9 +940,7 @@ async function buscarImagem(
 }
 
 
-// ==================================================
-// CARREGAR FOTO DO CARD
-// ==================================================
+
 
 async function carregarFoto(card) {
 
@@ -1073,9 +1042,7 @@ async function carregarFoto(card) {
 }
 
 
-// ==================================================
-// OBSERVAR CARDS
-// ==================================================
+
 
 function observarCards() {
 
@@ -1121,9 +1088,7 @@ function observarCards() {
 }
 
 
-// ==================================================
-// EXIBIR CARDS
-// ==================================================
+
 
 function exibirModelos(
     modelos,
@@ -1243,9 +1208,7 @@ function exibirModelos(
 }
 
 
-// ==================================================
-// EVENTO DO BOTÃO
-// ==================================================
+
 
 botaoBuscar.addEventListener(
     "click",
@@ -1253,8 +1216,5 @@ botaoBuscar.addEventListener(
 );
 
 
-// ==================================================
-// INICIAR
-// ==================================================
 
 carregarMarcas();
