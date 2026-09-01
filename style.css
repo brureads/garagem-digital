@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f5f7;
+    color: #222;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #111827;
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #d1d5db;
+    font-size: 1.05rem;
+}
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: 35px auto;
+}
+
+.busca {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.busca label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.area-busca {
+    display: flex;
+    gap: 10px;
+}
+
+select {
+    flex: 1;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+button {
+    padding: 13px 22px;
+    border: none;
+    border-radius: 8px;
+    background-color: #111827;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #374151;
+}
+
+button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+#resultado {
+    margin-top: 20px;
+}
+
+.mensagem-inicial,
+.mensagem {
+    background-color: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.mensagem-inicial span,
+.mensagem span {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.erro {
+    border: 1px solid #dc2626;
+}
+
+.cabecalho-resultados {
+    margin-bottom: 20px;
+}
+
+.cabecalho-resultados h2 {
+    font-size: 2rem;
+}
+
+.cabecalho-resultados p {
+    color: #666;
+    margin-top: 5px;
+}
+
+.lista-modelos {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+}
+
+.card-veiculo {
+    background-color: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    transition: 0.2s;
+}
+
+.card-veiculo:hover {
+    transform: translateY(-3px);
+}
+
+.icone-carro {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.card-veiculo h3 {
+    margin-bottom: 15px;
+    font-size: 1.15rem;
+}
+
+.informacoes p {
+    margin: 7px 0;
+    color: #555;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+
+    .area-busca {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
