@@ -1,96 +1,209 @@
-const campoBusca = document.getElementById("campo-busca");
+const selectMarca = document.getElementById("marca");
 const botaoBuscar = document.getElementById("botao-buscar");
 const areaResultado = document.getElementById("resultado");
 
-async function buscarModelos(marca) {
-    areaResultado.innerHTML = "<p>Buscando veículos... 🚗</p>";
+
+
+async function carregarMarcas() {
 
     try {
+
         const resposta = await fetch(
-            `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/${encodeURIComponent(marca)}?format=json`
+            "https://brasilapi.com.br/api/fipe/marcas/v1/carros"
         );
 
         if (!resposta.ok) {
-            throw new Error("Erro ao consultar a API.");
+            throw new Error("Erro ao carregar as marcas.");
         }
 
-        const dados = await resposta.json();
+        const marcas = await resposta.json();
 
-        if (!dados.Results || dados.Results.length === 0) {
-            areaResultado.innerHTML = `
-                <p>😕 Nenhum modelo encontrado para a marca <strong>${marca}</strong>.</p>
-                <p>Verifique o nome da marca e tente novamente.</p>
-            `;
-            return;
-        }
 
-        exibirModelos(dados.Results, marca);
+        marcas.sort((a, b) =>
+            a.nome.localeCompare(b.nome)
+        );
+
+        selectMarca.innerHTML =
+            '<option value="">Selecione uma marca</option>';
+
+        marcas.forEach((marca) => {
+
+            const opcao = document.createElement("option");
+
+            opcao.value = marca.valor;
+            opcao.textContent = marca.nome;
+
+            selectMarca.appendChild(opcao);
+
+        });
+
+        botaoBuscar.disabled = false;
 
     } catch (erro) {
+
+        selectMarca.innerHTML =
+            '<option value="">Erro ao carregar marcas</option>';
+
         areaResultado.innerHTML = `
-            <p>⚠️ Ops! Não foi possível realizar a busca.</p>
-            <p>Tente novamente em alguns instantes.</p>
+            <div class="mensagem erro">
+                <span>⚠️</span>
+                <p>Não foi possível carregar as marcas.</p>
+                <p>Tente novamente mais tarde.</p>
+            </div>
         `;
 
         console.error("Erro:", erro);
     }
 }
 
-function exibirModelos(modelos, marcaPesquisada) {
+
+
+async function buscarModelos() {
+
+    const codigoMarca = selectMarca.value;
+
+    const nomeMarca =
+        selectMarca.options[selectMarca.selectedIndex].text;
+
+
+
+    if (codigoMarca === "") {
+
+        areaResultado.innerHTML = `
+            <div class="mensagem">
+                <span>🚗</span>
+                <p>Escolha uma marca antes de realizar a busca.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    areaResultado.innerHTML = `
+        <div class="mensagem">
+            <span>🔎</span>
+            <p>Buscando modelos da ${nomeMarca}...</p>
+        </div>
+    `;
+
+
+    try {
+
+        const resposta = await fetch(
+            `https://brasilapi.com.br/api/fipe/veiculos/v1/carros/${codigoMarca}`
+        );
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao buscar os modelos.");
+        }
+
+        const modelos = await resposta.json();
+
+
+        if (modelos.length === 0) {
+
+            areaResultado.innerHTML = `
+                <div class="mensagem">
+                    <span>😕</span>
+                    <p>Nenhum modelo encontrado para ${nomeMarca}.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        exibirModelos(
+            modelos,
+            nomeMarca,
+            codigoMarca
+        );
+
+
+    } catch (erro) {
+
+        areaResultado.innerHTML = `
+            <div class="mensagem erro">
+                <span>⚠️</span>
+                <p>Ops! Não foi possível realizar a busca.</p>
+                <p>Tente novamente em alguns instantes.</p>
+            </div>
+        `;
+
+        console.error("Erro:", erro);
+    }
+}
+
+
+
+function exibirModelos(modelos, nomeMarca, codigoMarca) {
+
     let html = `
+
         <div class="cabecalho-resultados">
-            <h2>Resultados para "${marcaPesquisada}"</h2>
-            <p>${modelos.length} modelo(s) encontrado(s).</p>
+
+            <h2>${nomeMarca}</h2>
+
+            <p>
+                ${modelos.length} modelo(s) encontrado(s)
+            </p>
+
         </div>
 
         <div class="lista-modelos">
     `;
 
+
     modelos.forEach((veiculo) => {
+
         html += `
-            <div class="card-veiculo">
-                <h3>🚘 ${veiculo.Model_Name}</h3>
 
-                <p>
-                    <strong>Marca:</strong>
-                    ${veiculo.Make_Name}
-                </p>
+            <article class="card-veiculo">
 
-                <p>
-                    <strong>ID da marca:</strong>
-                    ${veiculo.Make_ID}
-                </p>
+                <div class="icone-carro">
+                    🚘
+                </div>
 
-                <p>
-                    <strong>ID do modelo:</strong>
-                    ${veiculo.Model_ID}
-                </p>
-            </div>
+                <h3>${veiculo.modelo}</h3>
+
+                <div class="informacoes">
+
+                    <p>
+                        <strong>Marca:</strong>
+                        ${nomeMarca}
+                    </p>
+
+                    <p>
+                        <strong>Código da marca:</strong>
+                        ${codigoMarca}
+                    </p>
+
+                    <p>
+                        <strong>Código do modelo:</strong>
+                        ${veiculo.valor}
+                    </p>
+
+                </div>
+
+            </article>
         `;
+
     });
+
 
     html += "</div>";
 
     areaResultado.innerHTML = html;
 }
 
-function realizarBusca() {
-    const marca = campoBusca.value.trim();
 
-    if (marca === "") {
-        areaResultado.innerHTML = `
-            <p>🚗 Digite uma marca de carro antes de buscar.</p>
-        `;
-        return;
-    }
+// Evento do botão
+botaoBuscar.addEventListener(
+    "click",
+    buscarModelos
+);
 
-    buscarModelos(marca);
-}
 
-botaoBuscar.addEventListener("click", realizarBusca);
 
-campoBusca.addEventListener("keydown", (evento) => {
-    if (evento.key === "Enter") {
-        realizarBusca();
-    }
-});
+carregarMarcas();

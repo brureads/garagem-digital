@@ -14,25 +14,36 @@
 
     <header>
         <h1>🚗 Garagem Digital</h1>
-        <p>Descubra modelos de diferentes fabricantes.</p>
+        <p>Explore modelos de carros disponíveis no mercado brasileiro.</p>
     </header>
 
     <main>
 
         <section class="busca">
-            <label for="campo-busca">Digite uma marca de carro:</label>
+
+            <label for="marca">Escolha uma marca:</label>
 
             <div class="area-busca">
-                <input type="text" id="campo-busca" placeholder="Ex.: BYD, Toyota, Ford...">
 
-                <button id="botao-buscar">
-                    Buscar
+                <select id="marca">
+                    <option value="">Carregando marcas...</option>
+                </select>
+
+                <button id="botao-buscar" disabled>
+                    Buscar modelos
                 </button>
+
             </div>
+
         </section>
 
         <section id="resultado">
-            <p>Digite uma marca para começar a pesquisa.</p>
+
+            <div class="mensagem-inicial">
+                <span>🚘</span>
+                <p>Escolha uma marca para conhecer seus modelos.</p>
+            </div>
+
         </section>
 
     </main>
