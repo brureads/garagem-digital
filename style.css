@@ -451,3 +451,116 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+.area-consulta-fipe {
+    margin-top: 18px;
+}
+
+.botao-fipe {
+    width: 100%;
+    background-color: #0f1021;
+    color: #ffcee4;
+    border-radius: 14px;
+}
+
+.botao-fipe:hover {
+    background-color: #d01257;
+}
+
+.painel-fipe {
+    margin-top: 15px;
+    padding: 15px;
+
+    background-color: #ffcee4;
+
+    border-radius: 16px;
+}
+
+.painel-fipe label {
+    display: block;
+
+    margin-top: 8px;
+    margin-bottom: 7px;
+
+    color: #0f1021;
+
+    font-weight: bold;
+}
+
+.painel-fipe select {
+    width: 100%;
+
+    margin-bottom: 10px;
+
+    background-color: white;
+}
+
+.carregando-fipe {
+    padding: 15px;
+
+    text-align: center;
+
+    color: #d01257;
+
+    font-weight: bold;
+}
+
+.resultado-preco-fipe {
+    margin-top: 15px;
+
+    padding: 18px;
+
+    background-color: white;
+
+    border: 2px solid #fb90b7;
+
+    border-radius: 16px;
+}
+
+.titulo-fipe {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #d01257;
+
+    font-weight: bold;
+}
+
+.valor-fipe {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #0f1021;
+
+    font-size: 1.6rem;
+}
+
+.resultado-preco-fipe p {
+    margin: 7px 0;
+
+    color: #0f1021;
+
+    font-size: 0.9rem;
+}
+
+.resultado-preco-fipe p strong {
+    color: #d01257;
+}
+
+.erro-fipe {
+    margin-top: 12px;
+
+    padding: 12px;
+
+    background-color: white;
+
+    border: 1px solid #d01257;
+
+    border-radius: 12px;
+
+    color: #d01257;
+
+    text-align: center;
+}
