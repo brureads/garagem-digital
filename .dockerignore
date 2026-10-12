@@ -1,0 +1,7 @@
+.git
+.github
+README.md
+firestore.rules
+*.log
+.env
+.env.*
