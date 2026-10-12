@@ -1,59 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Garagem Digital</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <header>
         <h1>🚗 Garagem Digital</h1>
         <p>Explore modelos de carros disponíveis no mercado brasileiro.</p>
     </header>
-
     <main>
-
         <section class="busca">
-
             <label for="marca">Escolha uma marca:</label>
-
             <div class="area-busca">
-
-                <select id="marca">
-                    <option value="">Carregando marcas...</option>
-                </select>
-
-                <button id="botao-buscar" disabled>
-                    Buscar modelos
-                </button>
-
+                <select id="marca"><option value="">Carregando marcas...</option></select>
+                <button type="button" id="botao-buscar" disabled>Buscar modelos</button>
             </div>
-
         </section>
-
-        <section id="resultado">
-
-            <div class="mensagem-inicial">
-                <span>🚘</span>
-                <p>Escolha uma marca para conhecer seus modelos.</p>
-            </div>
-
+        <section id="resultado" aria-live="polite">
+            <div class="mensagem-inicial"><span>🚘</span><p>Escolha uma marca para conhecer seus modelos.</p></div>
         </section>
-
+        <section class="secao-favoritos" aria-labelledby="titulo-favoritos">
+            <h2 id="titulo-favoritos">♥ Minha garagem de favoritos</h2>
+            <p id="status-favoritos" role="status">Conectando ao Firebase...</p>
+            <div id="favoritos-lista"><p class="vazio-favoritos">Carregando favoritos...</p></div>
+        </section>
     </main>
-
-    <footer>
-        <p>Garagem Digital • Bootcamp II</p>
-    </footer>
-
-    <script src="script.js"></script>
-
+    <footer><p>Garagem Digital • Bootcamp II</p></footer>
+    <script type="module" src="script.js"></script>
 </body>
-
 </html>
