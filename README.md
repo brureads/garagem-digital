@@ -3,87 +3,94 @@
 
 ## Autor
 
-Bruna Martins Moura  
+**Bruna Martins Moura**  
 Matrícula: 22650015  
 Instituição: CEUB  
 Disciplina: Bootcamp II
 
-## Descrição do projeto
+## 1. Descrição do projeto
 
-A Garagem Digital é uma aplicação web que permite explorar marcas e modelos de carros disponíveis no mercado brasileiro de forma simples, organizada e interativa.
+A Garagem Digital é uma aplicação web desenvolvida para explorar marcas e modelos de carros disponíveis no mercado brasileiro.
 
-A aplicação utiliza a BrasilAPI para consultar informações da Tabela FIPE, permitindo visualizar modelos conhecidos, versões disponíveis e códigos de referência.
+O sistema utiliza APIs públicas para apresentar informações sobre veículos, incluindo modelos, versões, códigos de referência, valores da Tabela FIPE e imagens ilustrativas.
 
-Também oferece consulta de valores FIPE e imagens ilustrativas dos veículos.
+Na Etapa 02 do Bootcamp II, o projeto evoluiu com a implementação de persistência de dados utilizando Firebase Firestore e conteinerização utilizando Docker e Nginx.
 
-Na Etapa 02 do Bootcamp II, o projeto foi ampliado com persistência de dados utilizando Firebase Firestore e conteinerização com Docker e Nginx.
+A aplicação permite que o usuário organize seus veículos favoritos, mantendo os registros armazenados em um banco de dados na nuvem.
 
-## Funcionalidades
+## 2. Funcionalidades
 
-- Selecionar marcas de veículos.
-- Consultar modelos utilizando a BrasilAPI.
-- Visualizar versões disponíveis na Tabela FIPE.
-- Consultar valores FIPE por versão e ano.
-- Visualizar códigos de referência.
-- Buscar imagens ilustrativas no Wikimedia Commons.
-- Adicionar carros aos favoritos.
-- Listar os veículos favoritos.
-- Excluir veículos da lista de favoritos.
-- Manter os favoritos salvos após fechar e reabrir o navegador.
-- Executar a aplicação em containers Docker.
-- Utilizar uma interface responsiva.
+- Seleção de marcas de veículos.
+- Consulta de modelos pela BrasilAPI.
+- Exibição das versões disponíveis.
+- Consulta de valores da Tabela FIPE.
+- Exibição de códigos de referência.
+- Busca de imagens pelo Wikimedia Commons.
+- Adição de veículos aos favoritos.
+- Listagem dos veículos favoritos.
+- Exclusão de veículos favoritos.
+- Persistência de dados com Firebase Firestore.
+- Autenticação anônima com Firebase Authentication.
+- Interface responsiva.
+- Execução da aplicação em containers Docker.
 
-## Tecnologias utilizadas
+## 3. Tecnologias utilizadas
 
 - HTML5
 - CSS3
 - JavaScript
 - Fetch API
 - BrasilAPI
-- Wikimedia Commons API
 - API FIPE Parallelum
-- Firebase Authentication
+- Wikimedia Commons API
 - Firebase Firestore
+- Firebase Authentication
 - Docker
 - Nginx
 - Git e GitHub
 - GitHub Pages
 
-## APIs utilizadas
+## 4. APIs utilizadas
 
 ### BrasilAPI
 
-Documentação: https://brasilapi.com.br/docs
+Responsável pela consulta das marcas e dos modelos de veículos.
 
-Lista de marcas:
+Documentação:
+
+https://brasilapi.com.br/docs
+
+Endpoint de marcas:
 
 https://brasilapi.com.br/api/fipe/marcas/v1/carros
 
-Lista de veículos:
+Endpoint de modelos:
 
 https://brasilapi.com.br/api/fipe/veiculos/v1/carros/{codigoMarca}
 
 ### API FIPE Parallelum
 
-Utilizada para consultar os anos disponíveis e os valores FIPE de versões específicas.
+Utilizada para consultar anos e valores de referência dos veículos.
 
 https://fipe.parallelum.com.br/
 
 ### Wikimedia Commons
 
-Utilizada para consultar imagens ilustrativas dos veículos.
+Utilizada para buscar imagens ilustrativas dos modelos.
 
 https://commons.wikimedia.org/
 
-## Persistência de dados — Firebase Firestore
+## 5. Persistência de dados — Firebase
 
-Na Etapa 02, foi implementada a persistência dos carros favoritos utilizando o Firebase Firestore, um banco de dados NoSQL em nuvem.
+Na segunda etapa do projeto, foi implementada a persistência dos veículos favoritos utilizando Firebase Firestore.
 
-O Firebase foi escolhido por permitir a integração com aplicações JavaScript sem a necessidade de desenvolver um backend próprio.
+O Firestore é um banco de dados NoSQL em nuvem que permite armazenar documentos organizados em coleções.
 
-### Estrutura dos dados
+Foi escolhido por permitir integração direta com JavaScript, sem a necessidade de desenvolver um backend próprio.
 
-Os favoritos são armazenados utilizando a seguinte estrutura:
+### Estrutura do banco de dados
+
+Os dados são organizados da seguinte forma:
 
 usuarios/
   {userId}/
@@ -93,184 +100,287 @@ usuarios/
         modelo
         criadoEm
 
-Cada documento contém:
+Cada favorito contém:
 
 - marca: fabricante do veículo.
-- modelo: nome do modelo escolhido.
+- modelo: nome do veículo selecionado.
 - criadoEm: data e horário de criação do registro.
 
 ### Operações implementadas
 
-CREATE: adiciona um veículo aos favoritos.
+**CREATE:** adiciona um veículo à lista de favoritos.
 
-READ: consulta e apresenta os veículos salvos.
+**READ:** consulta os veículos favoritos armazenados no Firestore.
 
-DELETE: remove um veículo da lista de favoritos.
+**DELETE:** remove um veículo da lista de favoritos.
 
-As operações são realizadas diretamente no Firestore.
+Essas operações atendem ao requisito mínimo de persistência da Etapa 02.
+
+### Teste de persistência
+
+Foi realizado um teste salvando um veículo BYD Dolphin Mini nos favoritos.
+
+Após fechar e reabrir a aplicação no mesmo navegador, o veículo permaneceu salvo.
+
+Esse comportamento demonstra que os dados são armazenados no Firebase Firestore, e não apenas em variáveis temporárias da aplicação.
+
+A interface também disponibiliza a operação de remoção dos registros.
 
 ### Autenticação e segurança
 
 A aplicação utiliza Firebase Authentication com autenticação anônima.
 
-Cada visitante recebe um identificador único, utilizado para organizar seus favoritos.
+Cada visitante autenticado recebe um identificador utilizado para organizar os documentos no banco de dados.
 
-As regras de segurança do Firestore restringem o acesso aos favoritos do próprio usuário autenticado.
+As regras de segurança do Firestore restringem o acesso à coleção de favoritos ao próprio usuário autenticado.
 
-### Teste de persistência
+O arquivo firestore.rules contém essas regras.
 
-Foi realizado um teste adicionando um veículo aos favoritos, fechando o navegador e acessando novamente a aplicação.
+### Limitações conhecidas
 
-O veículo permaneceu salvo, demonstrando o funcionamento da persistência no banco de dados.
+Como a autenticação é anônima, os favoritos não são automaticamente compartilhados entre diferentes dispositivos ou navegadores.
 
-A exclusão de favoritos também é disponibilizada pela interface.
+Caso o usuário apague os dados de autenticação do navegador, poderá perder o acesso aos favoritos armazenados anteriormente.
 
-### Limitação conhecida
+## 6. Conteinerização com Docker
 
-A autenticação anônima não permite recuperar automaticamente os mesmos favoritos em outro navegador ou dispositivo.
+A aplicação foi conteinerizada utilizando Docker e a imagem base nginx:alpine.
 
-A remoção dos dados de autenticação do navegador também pode causar a perda de acesso à lista anterior.
+O Nginx funciona como servidor web responsável por disponibilizar os arquivos estáticos da aplicação.
 
-## Conteinerização com Docker
+A utilização do Docker permite executar o projeto em um ambiente padronizado, reduzindo diferenças de configuração entre máquinas.
 
-A aplicação utiliza Docker para disponibilizar o site em um ambiente padronizado.
+### Dockerfile
 
-Foi utilizado o Nginx como servidor web, por meio da imagem base nginx:alpine.
+O Dockerfile utiliza a imagem nginx:alpine e copia os arquivos HTML, CSS e JavaScript para o diretório servido pelo Nginx.
 
-O Dockerfile copia os arquivos HTML, CSS e JavaScript para o diretório servido pelo Nginx.
+Na versão 1.1, foi adicionada uma configuração personalizada para o servidor por meio do arquivo nginx.conf.
 
-### Construir a imagem
+### Construção da imagem
 
-docker build -t bootcamp2-app:1.0 .
+docker build -t bootcamp2-app:1.1 .
 
-### Executar a aplicação
+### Execução com Docker
 
-docker run -d -p 8080:80 --name garagem-digital brureads/bootcamp2-app:1.0
+Para executar a versão 1.1 publicada no Docker Hub:
 
-Após executar o comando, acessar:
+docker run -d -p 8080:80 --name garagem-digital brureads/bootcamp2-app:1.1
+
+Após iniciar o container, a aplicação fica disponível em:
 
 http://localhost:8080
+
+O comando pode ser executado em uma máquina com Docker instalado e acesso à internet para baixar a imagem.
 
 ### Repositório Docker Hub
 
 https://hub.docker.com/r/brureads/bootcamp2-app
 
-### Versionamento das imagens
+## 7. Sidequest 1 — .dockerignore
 
-As tags previstas para a entrega são:
+Foi criado o arquivo .dockerignore para evitar que arquivos desnecessários sejam enviados ao contexto de construção da imagem Docker.
 
-- 1.0: primeira versão funcional conteinerizada.
-- 1.1: versão posterior com melhoria documentada.
-- latest: identificação da versão mais recente.
-
-## Sidequest 1 — .dockerignore
-
-Foi criado o arquivo .dockerignore para evitar o envio de arquivos desnecessários ao contexto de construção da imagem Docker.
-
-Exemplos de arquivos que podem ser ignorados:
+Entre os arquivos que podem ser excluídos estão:
 
 - Diretório .git
 - Arquivos temporários
-- Documentos não necessários à execução
-- Arquivos locais do ambiente de desenvolvimento
+- Documentação desnecessária ao build
+- Arquivos específicos do ambiente de desenvolvimento
 
-Isso reduz o contexto enviado ao Docker e pode tornar o processo de construção mais rápido e eficiente.
+O uso do .dockerignore reduz o tamanho do contexto enviado ao Docker, podendo diminuir o tempo de construção da imagem.
 
-## Sidequest 2 — Versionamento Docker
+O arquivo está disponível no repositório GitHub.
 
-O projeto utiliza versionamento de imagens Docker por meio de tags.
+## 8. Sidequest 2 — Versionamento de imagens
 
-A versão 1.0 representa a primeira versão funcional publicada.
+Foram publicadas três tags no Docker Hub:
 
-As versões 1.1 e latest serão publicadas após a conclusão da melhoria técnica prevista para a segunda versão.
+### Versão 1.0
 
-As tags permitem identificar versões específicas e controlar a distribuição da aplicação.
+Primeira versão funcional da Garagem Digital, utilizando Nginx para servir os arquivos da aplicação.
 
-## Sidequest 3 — Descrição no Docker Hub
+Imagem:
 
-O repositório da aplicação no Docker Hub possui uma apresentação contendo:
+brureads/bootcamp2-app:1.0
 
-- Descrição do projeto.
-- Funcionalidades principais.
-- Comando para executar a aplicação.
-- Link do código-fonte no GitHub.
+### Versão 1.1
+
+Versão com melhoria técnica na configuração do Nginx.
+
+Foi criado o arquivo nginx.conf, contendo os cabeçalhos HTTP:
+
+- X-Content-Type-Options: nosniff
+- Referrer-Policy: strict-origin-when-cross-origin
+
+Esses cabeçalhos ajudam a reforçar a segurança da aplicação.
+
+A alteração não modifica a aparência nem as funcionalidades do site.
+
+Imagem:
+
+brureads/bootcamp2-app:1.1
+
+### Versão latest
+
+Representa a versão mais recente da aplicação.
+
+A tag latest aponta para a mesma imagem da versão 1.1.
+
+Imagem:
+
+brureads/bootcamp2-app:latest
+
+### Evidência
+
+As três tags estão disponíveis publicamente em:
+
+https://hub.docker.com/r/brureads/bootcamp2-app/tags
+
+## 9. Sidequest 3 — Descrição no Docker Hub
+
+O repositório público no Docker Hub possui uma descrição do projeto e uma visão geral com:
+
+- Apresentação da aplicação.
+- Principais funcionalidades.
+- Tecnologias utilizadas.
+- Comando docker run.
+- Link do repositório GitHub.
 
 Repositório:
 
 https://hub.docker.com/r/brureads/bootcamp2-app
 
-## Sidequest 4 — Dois containers simultâneos
+## 10. Sidequest 4 — Dois containers simultâneos
 
-Foram executados dois containers da aplicação simultaneamente, utilizando portas diferentes.
+Foram executados dois containers da aplicação simultaneamente, utilizando a imagem Docker da versão 1.0.
 
-Container 1:
+### Primeiro container
 
 docker run -d -p 8080:80 --name garagem-digital-v1 bootcamp2-app:1.0
 
-Container 2:
+### Segundo container
 
 docker run -d -p 8081:80 --name garagem-digital-v2 bootcamp2-app:1.0
 
-Para verificar os containers:
+### Verificação
 
 docker ps
 
-Os dois containers foram executados com sucesso, permitindo acessar a aplicação nas portas 8080 e 8081.
+O comando apresentou os dois containers em execução simultânea.
 
-### Evidência
+O primeiro ficou disponível na porta 8080 e o segundo na porta 8081.
+
+### Evidência dos containers
 
 ![Dois containers Docker em execução](evidencias/docker-dois-containers.png)
 
-## Kubernetes e orquestração
+A imagem foi registrada como evidência da execução simultânea dos containers.
 
-Se fosse necessário administrar 100 containers, executar comandos Docker individualmente seria pouco eficiente.
+## 11. Kubernetes e orquestração
 
-Uma solução seria utilizar o Kubernetes, uma plataforma de orquestração de containers.
+Caso fosse necessário gerenciar 100 containers, executar comandos Docker individualmente seria uma solução pouco eficiente.
 
-O Kubernetes permite distribuir aplicações entre máquinas, acompanhar sua execução e gerenciar réplicas.
+Uma alternativa seria utilizar o Kubernetes, uma plataforma de orquestração de aplicações conteinerizadas.
 
-Um cluster é um conjunto de máquinas utilizadas para executar aplicações conteinerizadas.
+O Kubernetes permite automatizar a implantação, o gerenciamento, a recuperação e o dimensionamento de containers.
 
-Um pod é a menor unidade de execução gerenciada pelo Kubernetes e pode conter um ou mais containers.
+### Cluster
 
-As réplicas permitem manter várias instâncias de uma aplicação funcionando simultaneamente.
+Um cluster é um conjunto de máquinas utilizadas para executar as aplicações.
 
-Dessa forma, se uma instância apresentar problemas, o Kubernetes pode criar outra para manter a quantidade desejada de réplicas.
+Essas máquinas disponibilizam os recursos necessários para os containers.
 
-O Kubernetes também facilita a distribuição de cargas de trabalho e a atualização de aplicações.
+### Pod
 
-## Como executar localmente
+Um pod é a menor unidade de execução gerenciada pelo Kubernetes.
+
+Ele pode conter um ou mais containers que compartilham recursos de rede e armazenamento.
+
+### Réplicas
+
+As réplicas permitem manter várias instâncias de uma aplicação em funcionamento.
+
+Se uma instância apresentar problemas, o Kubernetes pode criar uma substituta para manter a quantidade desejada de réplicas.
+
+### Gerenciamento de 100 containers
+
+Para administrar 100 containers, seria possível utilizar recursos como Deployments para definir a quantidade desejada de réplicas.
+
+O Kubernetes distribuiria os pods entre os nós disponíveis do cluster e acompanharia seu funcionamento.
+
+Também seria possível utilizar Services para facilitar o acesso e distribuir o tráfego entre as instâncias.
+
+Dessa forma, a orquestração permitiria gerenciar aplicações em maior escala, aumentando a disponibilidade e facilitando a manutenção.
+
+## 12. Como executar localmente
 
 Clone o repositório:
 
 git clone https://github.com/brureads/garagem-digital.git
 
-Entre na pasta do projeto e abra utilizando um servidor HTTP local, como o Live Server do Visual Studio Code.
+Entre na pasta do projeto.
 
-Também é possível executar a aplicação utilizando Docker.
+Para executar sem Docker, utilize um servidor HTTP local, como o Live Server do Visual Studio Code.
 
-Para o funcionamento dos favoritos, são necessárias as configurações do Firebase Authentication e do Firestore, incluindo as regras de segurança.
+Também é possível utilizar Python:
 
-## Repositórios e links
+python -m http.server 5500
 
-GitHub:
+Depois acesse:
+
+http://localhost:5500
+
+Para executar com Docker, utilize a imagem publicada no Docker Hub.
+
+A funcionalidade de favoritos depende do Firebase Authentication e Firestore configurados corretamente.
+
+## 13. Versionamento com Git
+
+O projeto foi desenvolvido no mesmo repositório utilizado na Etapa 01.
+
+Durante a Etapa 02, foram realizados commits para registrar a evolução da aplicação, incluindo:
+
+- Integração com Firebase e favoritos.
+- Criação do Dockerfile e .dockerignore.
+- Registro das evidências dos containers.
+- Documentação do Firebase, Docker e Kubernetes.
+- Configuração de segurança do Nginx.
+- Atualização da documentação final.
+
+O histórico de commits está disponível no GitHub.
+
+## 14. Links do projeto
+
+### Repositório GitHub
 
 https://github.com/brureads/garagem-digital
 
-GitHub Pages:
+### Aplicação GitHub Pages
 
 https://brureads.github.io/garagem-digital/
 
-Docker Hub:
+### Repositório Docker Hub
 
 https://hub.docker.com/r/brureads/bootcamp2-app
 
-## Conclusão
+### Tags Docker
 
-Na Etapa 02 do Bootcamp II, a Garagem Digital evoluiu de uma aplicação de consulta de veículos para uma aplicação com persistência de dados em nuvem.
+https://hub.docker.com/r/brureads/bootcamp2-app/tags
 
-A integração com Firebase Firestore permitiu salvar e recuperar os veículos favoritos.
+### Comando para avaliação
 
-A utilização do Docker e do Nginx possibilitou executar a aplicação em containers, demonstrando conceitos de portabilidade, conteinerização e distribuição de software.
+docker run -d -p 8080:80 --name garagem-digital brureads/bootcamp2-app:1.1
 
-O projeto também proporcionou experiência prática com Git, GitHub, versionamento de imagens Docker e conceitos introdutórios de orquestração com Kubernetes.
+## 15. Conclusão
+
+A Etapa 02 do Bootcamp II permitiu evoluir a Garagem Digital com recursos de persistência de dados e conteinerização.
+
+A integração com Firebase Firestore possibilitou armazenar os veículos favoritos em um banco de dados real.
+
+A utilização do Docker e do Nginx permitiu disponibilizar a aplicação em um ambiente padronizado.
+
+Foram utilizadas diferentes tags de imagens Docker, além da execução simultânea de containers em portas distintas.
+
+O projeto também proporcionou experiência prática com versionamento Git, Docker Hub, documentação técnica e conceitos de Kubernetes.
+
+A aplicação mantém sua proposta original de oferecer uma interface simples, responsiva e organizada para explorar veículos.
